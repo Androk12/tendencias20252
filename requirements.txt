@@ -1,0 +1,6 @@
+# paquetes de python que se instalaran 
+#pip freeze
+asgiref==3.9.1
+Django==5.2.6
+sqlparse==0.5.3
+tzdata==2025.2
