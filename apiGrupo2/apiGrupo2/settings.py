@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.task', 'rest_framework', 'django_filters'       
+    'apps.pedidos', 'rest_framework', 'django_filters'
 ]
+AUTH_USER_MODEL = 'pedidos.Usuario'  # Modelo de usuario personalizado
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#Permisos api 
+# Permisos api
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -133,6 +134,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Redirigir al loguin de la api
+# Redirigir al loguin de la api
 
-LOGIN_REDIRECT_URL = '/api/'
+# LOGIN_REDIRECT_URL = '/api/'
