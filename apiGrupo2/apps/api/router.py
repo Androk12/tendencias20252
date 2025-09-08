@@ -1,8 +1,8 @@
-from rest_framework.routers import DefaultRouter
-from ..task.views import *
+# from rest_framework.routers import DefaultRouter
+# from ..pedidos.views import *
 
-router = DefaultRouter()
+# router = DefaultRouter()
 
-router.register(r'task', TaskViewset, basename= 'task')
+# router.register(r'task', TaskViewset, basename='task')
 
-urlpatterns = router.urls
+# urlpatterns = router.urls
