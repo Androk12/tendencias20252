@@ -5,5 +5,8 @@ from .serializers import *
 
 # Creamos el viewset para el modelo Pedido (esto significa que vamos a tener todas las operaciones CRUD)
 class PedidoViewSet(viewsets.ModelViewSet):
+    """
+    Un ViewSet para ver y editar instancias de Pedido.
+    """
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer

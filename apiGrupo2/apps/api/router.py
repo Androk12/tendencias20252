@@ -1,8 +1,12 @@
-# from rest_framework.routers import DefaultRouter
-# from ..pedidos.views import *
+# Vamos a crear las rutas para nuestra API de Pedidos
+from rest_framework.routers import DefaultRouter
+from apps.pedidos.views import *
 
-# router = DefaultRouter()
 
-# router.register(r'task', TaskViewset, basename='task')
+# Crearemos el DefaultRouter (esto nos crea las rutas automáticamente)
+router_api = DefaultRouter()
 
-# urlpatterns = router.urls
+# Registramos el viewset de Pedidos con el basename 'pedidos' que se usará para nombrar las rutas
+router_api.register(r'pedidos', PedidoViewSet, basename='pedidos')
+
+
