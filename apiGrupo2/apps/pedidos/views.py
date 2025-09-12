@@ -1,21 +1,9 @@
-# from django.shortcuts import render
-# from rest_framework import viewsets
-# from .models import *
-# from rest_framework import filters
-# from django_filters.rest_framework import DjangoFilterBackend
-# from .serializers import *
+# Vamos a crear las vistas que recibirán las peticiones HTTP
+from rest_framework import viewsets
+from .models import *
+from .serializers import *
 
-
-# class Viewset(viewsets.ModelViewSet):
-
-#     queryset = .objects.all()
-#     serializer_class = Serializer
-
-#     filter_backends = [
-#         DjangoFilterBackend,
-#         filters.SearchFilter,
-#         filters.OrderingFilter,
-#     ]
-#     filterset_fields = ('__all__')
-#     search_fields = ('__all__')
-#     ordering_fields = ('__all__')
+# Creamos el viewset para el modelo Pedido (esto significa que vamos a tener todas las operaciones CRUD)
+class PedidoViewSet(viewsets.ModelViewSet):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer

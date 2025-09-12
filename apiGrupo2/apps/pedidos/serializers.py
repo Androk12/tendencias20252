@@ -1,9 +1,9 @@
-# from rest_framework import serializers
-# from .models import *
+# Aca construirmos los serializers para el modelo de Pedidos
+from rest_framework import serializers
+from .models import *
 
-
-# class Serializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model =
-#         fields = '__all__'
+# Creamos el serializer para el modelo Pedido
+class PedidoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pedido
+        fields = '__all__'
