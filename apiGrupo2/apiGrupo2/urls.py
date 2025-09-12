@@ -5,5 +5,5 @@ from apps.api.router import router_api
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('api/', include(router_api.urls)),  # para redirigir a la api de pedidos
+    path('api/', include(router_api.urls)),  # para redirigir a la api de los modelos en general
 ]
