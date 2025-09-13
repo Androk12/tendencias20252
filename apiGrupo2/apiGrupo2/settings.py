@@ -103,13 +103,21 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Permisos api
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+
+"""
+REST_FRAMEWORK:
+
+Modificar la configuración de REST_FRAMEWORK para permitir el acceso anónimo a la API.
+Visulizacion, pero no modificaciones.
+"""
+
+#REST_FRAMEWORK = {
+#    # Use Django's standard `django.contrib.auth` permissions,
+#    # or allow read-only access for unauthenticated users.
+#    'DEFAULT_PERMISSION_CLASSES': [
+#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#    ]
+#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
