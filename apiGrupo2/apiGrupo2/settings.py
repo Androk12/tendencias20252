@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.pedidos', 'rest_framework', 'django_filters'
+    'apps.pedidos', 'rest_framework', 'django_filters','drf_yasg'
 ]
 AUTH_USER_MODEL = 'pedidos.Usuario'  # Modelo de usuario personalizado
 
