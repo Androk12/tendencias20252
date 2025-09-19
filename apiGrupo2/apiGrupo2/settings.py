@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.pedidos', 'rest_framework', 'django_filters'
+    'apps.pedidos', 'rest_framework', 'django_filters','drf_yasg'
 ]
 AUTH_USER_MODEL = 'pedidos.Usuario'  # Modelo de usuario personalizado
 
@@ -103,13 +103,21 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Permisos api
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+
+"""
+REST_FRAMEWORK:
+
+Modificar la configuración de REST_FRAMEWORK para permitir el acceso anónimo a la API.
+Visulizacion, pero no modificaciones.
+"""
+
+#REST_FRAMEWORK = {
+#    # Use Django's standard `django.contrib.auth` permissions,
+#    # or allow read-only access for unauthenticated users.
+#    'DEFAULT_PERMISSION_CLASSES': [
+#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#    ]
+#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
