@@ -1,18 +1,27 @@
 # paquetes de python que se instalaran 
 #pip freeze
 asgiref==3.9.1
+certifi==2025.10.5
+charset-normalizer==3.4.4
+dj-rest-auth==6.0.0
 Django==5.2.6
 django-filter==25.1
 djangorestframework==3.16.1
+djangorestframework-simplejwt==5.3.1
 drf-yasg==1.21.10
+idna==3.11
 inflection==0.5.1
 Markdown==3.9
 packaging==25.0
+PyJWT==2.10.1
 pytz==2025.2
 PyYAML==6.0.2
+requests==2.32.5
 sqlparse==0.5.3
+typing_extensions==4.15.0
 tzdata==2025.2
 uritemplate==4.2.0
+urllib3==2.5.0
 
 # Autenticación JWT
 djangorestframework-simplejwt==5.3.1    # Tokens JWT
