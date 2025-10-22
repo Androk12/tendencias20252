@@ -1,15 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
-# Se import Abstractuser para extender el modelo de usuario predeterminado de django
-# permitiendo agregar campos adicionales como role entre otros
-
-
-# Se comento este modelo para evitar conflictos con el modelo de
-# usuario predeterminado de django, par aun futuro se debe configurar en settings.py
-# AUTH_USER_MODEL = 'pedidos.Usuario para usar el modelo de usuario personalizado'
-# por ahora usaremos el modelo de usuario predeterminado de django
-# la implementacion completa del modelo usuario personalizado se dejara para un futuro
 
 
 class Usuario(AbstractUser):
@@ -21,11 +12,6 @@ class Usuario(AbstractUser):
         ('VENDEDOR', 'Vendedor'),
     )
     role = models.CharField(max_length=20, choices=ROLES, blank=True)
-
-# Se define el modelo usuario base que hereda de AbstractUser
-# Esto permite agregar campos adicionales al modelo de usuario prederteminado de Django
-# Por otro lado se define un campo adcional llamado roles que permite definir multiples roles para los usuarios
-# Esto es util para manejar permisos y funcionalidades diferentes para cada tipo de usuario en la aplicacion
 
 
 def __str__(self):
