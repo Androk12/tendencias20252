@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
 
-    'apps.pedidos', 'rest_framework', 'django_filters','drf_yasg'
+
+    'apps.pedidos', 'rest_framework', 'django_filters', 'drf_yasg'
 ]
 AUTH_USER_MODEL = 'pedidos.Usuario'  # Modelo de usuario personalizado
 
@@ -112,14 +112,19 @@ REST_FRAMEWORK:
 Modificar la configuración de REST_FRAMEWORK para permitir el acceso anónimo a la API.
 Visulizacion, pero no modificaciones.
 """
-
+#Se comento temas de autenticacion para poder probar generacion de reportes pdf y json
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # ← JWT activo
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',  # ← JWT activo
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # ← Requerir autenticación por defecto
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # ← Requerir autenticación por defecto
+        'rest_framework.permissions.AllowAny',  # ← Permitir acceso anónimo
     ],
+
 }
 
 # Internationalization
@@ -150,7 +155,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGIN_REDIRECT_URL = '/api/'
 
 
-#Configuracion basica JWT
+# Configuracion basica JWT
 
 INSTALLED_APPS = [
     # Django apps base
@@ -172,13 +177,13 @@ INSTALLED_APPS = [
 ]
 
 
-#AUTH_USER_MODEL = 'apps.api.pedidos'
+# AUTH_USER_MODEL = 'apps.api.pedidos'
 AUTH_USER_MODEL = 'pedidos.Usuario'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
 }
 
 
