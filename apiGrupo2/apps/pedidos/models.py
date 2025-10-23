@@ -16,7 +16,7 @@ class Usuario(AbstractUser):
 
 def __str__(self):
     return f"{self.username} - {self.get_role_display()}"
-    # Metodo para representar el objeto usuario como una cadena de texto
+    
 
 
 class Pedido(models.Model):
@@ -36,8 +36,7 @@ class Pedido(models.Model):
 
     def __str__(self):
         return f"Pedido {self.id} - {self.estado} - {self.direccion}"
-    # Metodo para representar el objeto pedido como una cadena de texto
-
+   
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
@@ -57,7 +56,7 @@ class DetallePedido(models.Model):
     cantidad = models.IntegerField()
 
     def __str__(self):
-        # Metodo para representar el objeto detalle pedido como una cadena de texto
+        
         return f"{self.cantidad} x {self.producto.nombre} en Pedido {self.pedido.id}"
 
 
@@ -66,7 +65,7 @@ class Entrega(models.Model):
     repartidor = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, related_name='entregas_repartidor')
     fecha_asignacion = models.DateTimeField(auto_now_add=True)
-    # fecha_entrega = models.DateTimeField(blank=False)
+    
     ESTADOS_ENTREGA = (
         ('ASIGNADO', 'Asignado'),
         ('EN_CAMINO', 'En Camino'),
@@ -80,17 +79,16 @@ class Entrega(models.Model):
 
 class Reporte(models.Model):
     pedido = models.ForeignKey(
-        # related_name permite nombrar la relacion inversa para acceder a los datos relacionados desde el modelo que no tiene la relacion directa
+        
         Pedido, on_delete=models.CASCADE, related_name='reportes')
     usuario = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, related_name='reportes_usuario')
-    # Tipo de reporte si es json o pdf
+ 
     tipo_reporte = models.CharField(max_length=100)
     fecha_generacion = models.DateTimeField(auto_now_add=True)
-    # Almacenamiento de informes en pdf, upload_to define la carpeta donde se subira el archivo
-    # falta crear la carpeta media/reportes
+   
     repo_pdf = models.FileField(upload_to='reportes/', blank=True, null=True)
-    # Almacenamiento de informe en json este se almacena directamente en la base de datos
+
     repo_json = models.JSONField(blank=True, null=True)
 
     def __str__(self):
@@ -99,7 +97,7 @@ class Reporte(models.Model):
 
 class Notificacion(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
-    TIPOS_NOTIFICACION = (  # Este tipo de campo permite definir un conjunto de opciones predefinidad para el campo, similar a un select en HTML
+    TIPOS_NOTIFICACION = ( 
         ('INFO', 'Información'),
         ('ALERTA', 'Alerta'),
         ('URGENTE', 'Urgente'),
