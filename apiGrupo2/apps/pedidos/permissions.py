@@ -66,6 +66,8 @@ class IsCliente(IsAuthenticated):
         return hasattr(request.user, 'role') and request.user.role == 'CLIENTE'
 
 
+# === PERMISOS ESPECÍFICOS POR RECURSO ===
+
 class UsuarioPermission(IsAuthenticated):
     """
     Permisos específicos para el modelo Usuario:
@@ -80,12 +82,15 @@ class UsuarioPermission(IsAuthenticated):
 
         user_role = getattr(request.user, 'role', None)
 
+        # Admin tiene acceso completo
         if user_role == 'ADMIN':
             return True
 
+        # Vendedores y repartidores solo lectura
         if user_role in ['VENDEDOR', 'REPARTIDOR']:
             return request.method in permissions.SAFE_METHODS
 
+        # Clientes solo pueden ver listados (para búsquedas) pero no crear usuarios
         if user_role == 'CLIENTE':
             return request.method in permissions.SAFE_METHODS or view.action == 'retrieve'
 
@@ -94,12 +99,15 @@ class UsuarioPermission(IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         user_role = getattr(request.user, 'role', None)
 
+        # Admin puede hacer todo
         if user_role == 'ADMIN':
             return True
 
+        # Clientes solo pueden acceder a su propio perfil
         if user_role == 'CLIENTE':
             return obj.id == request.user.id
 
+        # Vendedores y repartidores solo lectura
         if user_role in ['VENDEDOR', 'REPARTIDOR']:
             return request.method in permissions.SAFE_METHODS
 
@@ -119,9 +127,11 @@ class ProductoPermission(IsAuthenticated):
 
         user_role = getattr(request.user, 'role', None)
 
+        # Admin y vendedores pueden hacer todo
         if user_role in ['ADMIN', 'VENDEDOR']:
             return True
 
+        # Repartidores y clientes solo lectura
         if user_role in ['REPARTIDOR', 'CLIENTE']:
             return request.method in permissions.SAFE_METHODS
 
@@ -143,9 +153,11 @@ class PedidoPermission(IsAuthenticated):
 
         user_role = getattr(request.user, 'role', None)
 
+        # Admin y vendedores acceso completo
         if user_role in ['ADMIN', 'VENDEDOR']:
             return True
 
+        # Repartidores y clientes pueden ver listados y crear/actualizar según contexto
         if user_role in ['REPARTIDOR', 'CLIENTE']:
             return True
 
@@ -154,15 +166,19 @@ class PedidoPermission(IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         user_role = getattr(request.user, 'role', None)
 
+        # Admin y vendedores pueden hacer todo
         if user_role in ['ADMIN', 'VENDEDOR']:
             return True
 
+        # Clientes solo sus propios pedidos
         if user_role == 'CLIENTE':
             return obj.cliente.id == request.user.id
 
+        # Repartidores solo pueden ver y actualizar pedidos que tienen entregas asignadas
         if user_role == 'REPARTIDOR':
             if request.method in permissions.SAFE_METHODS:
                 return True
+            # Para actualizar, verificar que el repartidor tenga una entrega asignada
             try:
                 entrega = obj.entrega
                 return entrega.repartidor.id == request.user.id
@@ -187,12 +203,15 @@ class EntregaPermission(IsAuthenticated):
 
         user_role = getattr(request.user, 'role', None)
 
+        # Admin tiene acceso completo
         if user_role == 'ADMIN':
             return True
 
+        # Vendedores solo lectura
         if user_role == 'VENDEDOR':
             return request.method in permissions.SAFE_METHODS
 
+        # Repartidores y clientes pueden ver y crear/actualizar según contexto
         if user_role in ['REPARTIDOR', 'CLIENTE']:
             return True
 
@@ -201,15 +220,19 @@ class EntregaPermission(IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         user_role = getattr(request.user, 'role', None)
 
+        # Admin puede hacer todo
         if user_role == 'ADMIN':
             return True
 
+        # Vendedores solo lectura
         if user_role == 'VENDEDOR':
             return request.method in permissions.SAFE_METHODS
 
+        # Repartidores solo sus entregas
         if user_role == 'REPARTIDOR':
             return obj.repartidor.id == request.user.id
 
+        # Clientes solo lectura de entregas de sus pedidos
         if user_role == 'CLIENTE':
             return (request.method in permissions.SAFE_METHODS and
                     obj.pedido.cliente.id == request.user.id)
@@ -231,6 +254,7 @@ class ReportePermission(IsAuthenticated):
 
         user_role = getattr(request.user, 'role', None)
 
+        # Solo admin y vendedores tienen acceso a reportes
         return user_role in ['ADMIN', 'VENDEDOR']
 
     def has_object_permission(self, request, view, obj):
@@ -240,6 +264,7 @@ class ReportePermission(IsAuthenticated):
         if user_role == 'ADMIN':
             return True
 
+        # Vendedores solo sus propios reportes
         if user_role == 'VENDEDOR':
             return obj.usuario.id == request.user.id
 
@@ -257,14 +282,18 @@ class NotificacionPermission(IsAuthenticated):
         if not super().has_permission(request, view):
             return False
 
+        # Todos los usuarios autenticados pueden acceder a notificaciones
         return True
 
     def has_object_permission(self, request, view, obj):
         user_role = getattr(request.user, 'role', None)
 
+        # Admin puede hacer todo
         if user_role == 'ADMIN':
             return True
 
+        # Los demás usuarios solo pueden ver notificaciones de pedidos relacionados con ellos
+        # Esto requiere lógica específica según el contexto del pedido
         if user_role == 'CLIENTE':
             return obj.pedido.cliente.id == request.user.id
 
@@ -275,11 +304,13 @@ class NotificacionPermission(IsAuthenticated):
                 return False
 
         if user_role == 'VENDEDOR':
+            # Los vendedores pueden ver todas las notificaciones (son parte del staff)
             return request.method in permissions.SAFE_METHODS
 
         return False
 
 
+# === PERMISOS COMPUESTOS ===
 
 class AdminOrVendedor(IsAuthenticated):
     """
