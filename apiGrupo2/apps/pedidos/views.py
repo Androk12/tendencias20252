@@ -71,10 +71,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 class ProductoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de productos con permisos basados en roles.
-
-    Comportamiento por rol:
-    - ADMIN/VENDEDOR: CRUD completo
-    - REPARTIDOR/CLIENTE: Solo lectura
     """
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
@@ -100,15 +96,11 @@ class ProductoViewSet(viewsets.ModelViewSet):
 class PedidoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de pedidos con permisos basados en roles.
-
-    Comportamiento por rol:
-    - ADMIN/VENDEDOR: CRUD completo sobre todos los pedidos
-    - REPARTIDOR: Lectura + actualizar estado de pedidos asignados
-    - CLIENTE: CRUD solo de sus propios pedidos
     """
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
     permission_classes = [permissions.AllowAny]  # [PedidoPermission]
+
 # se comento para poder probar generacion de reportes en pdf y json
     # def get_queryset(self):
     #     """
@@ -141,10 +133,7 @@ class PedidoViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], permission_classes=[AdminOrVendedor])
     def por_estado(self, request):
-        """
-        Endpoint para obtener pedidos agrupados por estado.
-        Solo para admin y vendedores.
-        """
+        
         estados = {}
         for estado_code, estado_name in Pedido.ESTADOS:
             pedidos = self.get_queryset().filter(estado=estado_code)
@@ -156,7 +145,6 @@ class PedidoViewSet(viewsets.ModelViewSet):
     def cambiar_estado(self, request, pk=None):
         """
         Endpoint específico para cambiar el estado de un pedido.
-        Solo para admin y vendedores.
         """
         pedido = self.get_object()
         nuevo_estado = request.data.get('estado')
@@ -201,7 +189,6 @@ class PedidoViewSet(viewsets.ModelViewSet):
 class DetallePedidoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de detalles de pedidos.
-    Hereda los mismos permisos que PedidoViewSet ya que son parte integral del pedido.
     """
     queryset = DetallePedido.objects.all()
     serializer_class = DetallePedidoSerializer
@@ -226,12 +213,6 @@ class DetallePedidoViewSet(viewsets.ModelViewSet):
 class EntregaViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de entregas con permisos basados en roles.
-
-    Comportamiento por rol:
-    - ADMIN: CRUD completo
-    - VENDEDOR: Solo lectura
-    - REPARTIDOR: CRUD de sus propias entregas
-    - CLIENTE: Solo lectura de entregas de sus pedidos
     """
     queryset = Entrega.objects.all()
     serializer_class = EntregaSerializer
@@ -308,11 +289,6 @@ class EntregaViewSet(viewsets.ModelViewSet):
 class ReporteViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de reportes con permisos basados en roles.
-
-    Comportamiento por rol:
-    - ADMIN: CRUD completo sobre todos los reportes
-    - VENDEDOR: Crear y leer sus propios reportes
-    - REPARTIDOR/CLIENTE: Sin acceso
     """
     queryset = Reporte.objects.all()
     serializer_class = ReporteSerializer
@@ -345,7 +321,6 @@ class ReporteViewSet(viewsets.ModelViewSet):
     def generar_reporte_general(self, request):
         """
         Endpoint para generar reportes generales del sistema.
-        Solo para administradores.
         """
         # Aquí implementarías la lógica para generar reportes automáticos
         # Por ejemplo, reportes de ventas, entregas, etc.
@@ -355,10 +330,6 @@ class ReporteViewSet(viewsets.ModelViewSet):
 class NotificacionViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de notificaciones con permisos basados en roles.
-
-    Comportamiento por rol:
-    - ADMIN: CRUD completo sobre todas las notificaciones
-    - Otros roles: Solo notificaciones relacionadas con sus pedidos/entregas
     """
     queryset = Notificacion.objects.all()
     serializer_class = NotificacionSerializer
@@ -412,7 +383,6 @@ class NotificacionViewSet(viewsets.ModelViewSet):
     def crear_notificacion_masiva(self, request):
         """
         Endpoint para crear notificaciones masivas.
-        Solo para admin y vendedores.
         """
         # Aquí implementarías la lógica para enviar notificaciones masivas
         return Response({'mensaje': 'Funcionalidad de notificación masiva pendiente de implementación'})

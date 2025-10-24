@@ -50,10 +50,8 @@ class BaseTestCase(TestCase):
             cliente=self.cliente
         )
 
-
-# ---------------------------
 # Pruebas CRUD para PRODUCTOS
-# ---------------------------
+
 class ProductoTests(BaseTestCase):
 
     def setUp(self):
@@ -89,9 +87,8 @@ class ProductoTests(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-# ------------------------
 # Pruebas CRUD para PEDIDOS
-# ------------------------
+
 class PedidoTests(BaseTestCase):
 
     def setUp(self):
@@ -127,9 +124,8 @@ class PedidoTests(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-# ------------------------
 # Pruebas CRUD para USUARIOS
-# ------------------------
+
 class UsuarioTests(BaseTestCase):
 
     def setUp(self):
@@ -153,9 +149,8 @@ class UsuarioTests(BaseTestCase):
         self.assertTrue(len(response.data) > 0)
 
 
-# ------------------------
 # Pruebas CRUD para ENTREGAS
-# ------------------------
+
 class EntregaTests(BaseTestCase):
 
     def setUp(self):

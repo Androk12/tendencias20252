@@ -71,9 +71,6 @@ class IsCliente(IsAuthenticated):
 class UsuarioPermission(IsAuthenticated):
     """
     Permisos específicos para el modelo Usuario:
-    - ADMIN: CRUD completo sobre todos los usuarios
-    - VENDEDOR/REPARTIDOR: Solo lectura de usuarios de su mismo tipo
-    - CLIENTE: Solo puede ver y editar su propio perfil
     """
 
     def has_permission(self, request, view):
@@ -117,8 +114,6 @@ class UsuarioPermission(IsAuthenticated):
 class ProductoPermission(IsAuthenticated):
     """
     Permisos para el modelo Producto:
-    - ADMIN/VENDEDOR: CRUD completo
-    - REPARTIDOR/CLIENTE: Solo lectura
     """
 
     def has_permission(self, request, view):
@@ -191,10 +186,6 @@ class PedidoPermission(IsAuthenticated):
 class EntregaPermission(IsAuthenticated):
     """
     Permisos para el modelo Entrega:
-    - ADMIN: CRUD completo
-    - VENDEDOR: Solo lectura
-    - REPARTIDOR: CRUD de sus propias entregas
-    - CLIENTE: Solo lectura de entregas de sus pedidos
     """
 
     def has_permission(self, request, view):
@@ -243,9 +234,6 @@ class EntregaPermission(IsAuthenticated):
 class ReportePermission(IsAuthenticated):
     """
     Permisos para el modelo Reporte:
-    - ADMIN: CRUD completo
-    - VENDEDOR: Crear y leer sus propios reportes
-    - REPARTIDOR/CLIENTE: Sin acceso
     """
 
     def has_permission(self, request, view):
@@ -274,8 +262,6 @@ class ReportePermission(IsAuthenticated):
 class NotificacionPermission(IsAuthenticated):
     """
     Permisos para el modelo Notificacion:
-    - ADMIN: CRUD completo
-    - VENDEDOR/REPARTIDOR/CLIENTE: Solo sus propias notificaciones (lectura y marcar como visto)
     """
 
     def has_permission(self, request, view):
@@ -327,10 +313,7 @@ class AdminOrVendedor(IsAuthenticated):
 
 
 class StaffOrOwner(IsAuthenticated):
-    """
-    Permiso compuesto: permite acceso a staff (ADMIN/VENDEDOR) o al propietario del recurso.
-    Requiere implementación específica en has_object_permission.
-    """
+
 
     def has_permission(self, request, view):
         if not super().has_permission(request, view):
