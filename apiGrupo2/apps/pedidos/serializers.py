@@ -8,7 +8,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         # Exponemos solo estos campos (role lo definimos dentro de models.py los demas vienen por defecto con AbstractUser)
-        fields = ['id', 'username', 'email', 'role']
+        fields = ['id', 'username', 'email', 'role', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
 
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:

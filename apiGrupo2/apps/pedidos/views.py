@@ -1,5 +1,5 @@
 # Vamos a crear las vistas que recibirán las peticiones HTTP
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
@@ -16,6 +16,7 @@ from .permissions import (
 from .pdf import *
 from .json import *
 from django.http import HttpResponse
+from rest_framework.views import APIView
 # --- ViewSets para cada modelo ---
 
 
@@ -67,7 +68,20 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
+class RegistroUsuarioView(APIView):
+    permission_classes = [permissions.AllowAny]
 
+    def post(self, request):
+        serializer = UsuarioSerializer(data=request.data)
+        if serializer.is_valid():
+            user = Usuario.objects.create_user(
+                username=serializer.validated_data['username'],
+                email=serializer.validated_data.get('email', ''),
+                password=serializer.validated_data['password'],  # contraseña del usuario
+                role='CLIENTE',  # rol por defecto
+            )
+            return Response({'message': 'Usuario creado exitosamente'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class ProductoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de productos con permisos basados en roles.
