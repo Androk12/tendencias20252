@@ -9,20 +9,16 @@ import DashboardAdmin from "./pages/DashboardAdmin";
 import DashboardVendedor from "./pages/DashboardVendedor";
 import DashboardRepartidor from "./pages/DashboardRepartidor";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Entregas from "./pages/Entregas";
+import ClienteProductos from "./pages/ClienteProductos";
+import MisPedidos from "./pages/Mispedidos"; // ✅ Import corregido
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Navigate to="/login" replace />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/registro",
-    element: <Registro />,
-  },
+  { path: "/", element: <Navigate to="/login" replace /> },
+  { path: "/login", element: <Login /> },
+  { path: "/registro", element: <Registro /> },
+
+  // Rutas generales protegidas
   {
     path: "/productos",
     element: (
@@ -70,6 +66,24 @@ const router = createBrowserRouter([
         <DashboardRepartidor />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/entregas",
+    element: (
+      <ProtectedRoute>
+        <Entregas />
+      </ProtectedRoute>
+    ),
+  },
+
+  // Rutas específicas para clientes
+  {
+    path: "/cliente/productos",
+    element: <ClienteProductos />,
+  },
+  {
+    path: "/cliente/mispedidos",
+    element: <MisPedidos />, // ✅ Ruta corregida y consistente
   },
 ]);
 

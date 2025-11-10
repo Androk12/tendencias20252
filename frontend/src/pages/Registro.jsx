@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // <--- Importamos useNavigate
 
 const Registro = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
-  const [password, setPassword] = useState("");  // nuevo estado
+  const [password, setPassword] = useState("");  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate(); // <--- Inicializamos useNavigate
 
   const handleRegistro = async (e) => {
     e.preventDefault();
@@ -27,10 +30,10 @@ const Registro = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: nombre,  // coincide con el serializer
-          email: correo,     // coincide con el serializer
-          password: password, // coincide con el serializer
-          role: "CLIENTE",   // rol por defecto
+          username: nombre,
+          email: correo,
+          password: password,
+          role: "CLIENTE",
         }),
       });
 
@@ -92,6 +95,15 @@ const Registro = () => {
           Registrar Usuario
         </button>
       </form>
+
+      {/* Botón constante para ir al login */}
+      <button
+        type="button"
+        style={{ ...styles.button, marginTop: "15px", backgroundColor: "#28a745" }}
+        onClick={() => navigate("/login")}
+      >
+        Ir al Login
+      </button>
     </div>
   );
 };

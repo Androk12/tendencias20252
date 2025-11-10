@@ -1,0 +1,23 @@
+.mis-pedidos-page .main-content {
+  padding-top: 90px; /* evita que el navbar lo cubra */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pedido-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.empty-img {
+  width: 150px;
+  margin-bottom: 20px;
+}

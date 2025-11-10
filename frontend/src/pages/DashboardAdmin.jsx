@@ -12,12 +12,9 @@ export default function DashboardAdmin() {
 
   const token = localStorage.getItem("access");
 
-  // Obtener todos los usuarios
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get("/api/usuarios/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get("/api/usuarios/", { headers: { Authorization: `Bearer ${token}` } });
       setUsuarios(response.data);
       setLoading(false);
     } catch (err) {
@@ -31,12 +28,9 @@ export default function DashboardAdmin() {
     fetchUsuarios();
   }, []);
 
-  // Eliminar usuario
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/usuarios/${id}/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(`/api/usuarios/${id}/`, { headers: { Authorization: `Bearer ${token}` } });
       fetchUsuarios();
     } catch (err) {
       console.error(err);
@@ -44,12 +38,9 @@ export default function DashboardAdmin() {
     }
   };
 
-  // Crear usuario
   const handleCreate = async () => {
     try {
-      await axios.post("/api/usuarios/", newUser, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post("/api/usuarios/", newUser, { headers: { Authorization: `Bearer ${token}` } });
       setNewUser({ username: "", email: "", password: "", role: "CLIENTE" });
       fetchUsuarios();
     } catch (err) {
@@ -58,33 +49,26 @@ export default function DashboardAdmin() {
     }
   };
 
-  // Iniciar edición de un usuario
   const startEditing = (user) => {
     setEditingUser(user.id);
     setEditData({
       username: user.username,
       email: user.email,
       role: user.role,
-      password: "", // La contraseña se deja vacía para asignar nueva si se desea
+      password: "",
     });
   };
 
-  // Cancelar edición
   const cancelEditing = () => {
     setEditingUser(null);
     setEditData({ username: "", email: "", role: "", password: "" });
   };
 
-  // Guardar cambios de edición
   const submitEdit = async () => {
     try {
-      // Solo enviamos la contraseña si se escribió algo nuevo
       const payload = { ...editData };
       if (!payload.password) delete payload.password;
-
-      await axios.patch(`/api/usuarios/${editingUser}/`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.patch(`/api/usuarios/${editingUser}/`, payload, { headers: { Authorization: `Bearer ${token}` } });
       setEditingUser(null);
       fetchUsuarios();
     } catch (err) {
@@ -93,72 +77,182 @@ export default function DashboardAdmin() {
     }
   };
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: 50 }}>Cargando...</p>;
+  if (loading) return <p style={{ textAlign: "center", marginTop: 50, color: "#fff" }}>Cargando...</p>;
   if (error) return <p style={{ color: "red", textAlign: "center", marginTop: 50 }}>{error}</p>;
 
+  // Estilos modernos tipo "glassmorphism"
+  const inputStyle = {
+    padding: "10px 15px",
+    borderRadius: 8,
+    border: "1px solid rgba(255,255,255,0.4)",
+    background: "rgba(255,255,255,0.1)",
+    color: "#fff",
+    outline: "none",
+    fontSize: 14,
+    minWidth: 180,
+  };
+
+  const selectStyle = {
+    ...inputStyle,
+    appearance: "none",
+    cursor: "pointer",
+  };
+
+  const buttonStyle = {
+    padding: "8px 15px",
+    borderRadius: 8,
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "bold",
+    backgroundColor: "#3498db",
+    color: "#fff",
+    transition: "0.3s",
+  };
+
+  const cardStyle = {
+    background: "rgba(255,255,255,0.15)",
+    backdropFilter: "blur(8px)",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+    color: "#fff",
+  };
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse",
+    background: "rgba(255,255,255,0.15)",
+    backdropFilter: "blur(8px)",
+    borderRadius: 10,
+    overflow: "hidden",
+    color: "#fff",
+  };
+
+  const thTdStyle = {
+    padding: "12px 10px",
+    borderBottom: "1px solid rgba(255,255,255,0.3)",
+    textAlign: "left",
+  };
+
+  const CustomStyles = () => (
+    <style>
+      {`
+        input::placeholder,
+        select::placeholder {
+          color: #fff !important;
+          opacity: 1;
+        }
+      `}
+    </style>
+  );
+
   return (
-    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "Arial, sans-serif" }}>
-      <Sidebar />
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        fontFamily: "Arial, sans-serif",
+        backgroundImage:
+          "url('https://checkbits.com.br/wp-content/uploads/2023/06/O-que-e-gestao-de-supermercados.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        position: "relative",
+      }}
+    >
+      <CustomStyles />
 
-      <div style={styles.container}>
-        <h1 style={styles.title}>Dashboard Admin</h1>
+      {/* Overlay oscuro */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          zIndex: 0,
+        }}
+      />
 
-        {/* Formulario de creación */}
-        <div style={styles.createForm}>
+      {/* Sidebar */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          backgroundColor: "rgba(255,255,255,0.2)",
+          backdropFilter: "blur(8px)",
+          padding: 15,
+          width: 200,
+          boxShadow: "2px 0 5px rgba(0,0,0,0.2)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 15,
+        }}
+      >
+        <Sidebar textColor="#fff" />
+      </div>
+
+      {/* Contenido principal */}
+      <div style={{ flex: 1, padding: 30, position: "relative", zIndex: 1 }}>
+        <h1 style={{ marginBottom: 30, fontSize: 28, color: "#fff" }}>Dashboard Admin</h1>
+
+        <div style={cardStyle}>
           <input
             placeholder="Username"
             value={newUser.username}
             onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-            style={styles.input}
+            style={inputStyle}
           />
           <input
             placeholder="Email"
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            style={styles.input}
+            style={inputStyle}
           />
           <input
             placeholder="Password"
             type="password"
             value={newUser.password}
             onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-            style={styles.input}
+            style={inputStyle}
           />
           <select
             value={newUser.role}
             onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-            style={styles.select}
+            style={selectStyle}
           >
             <option value="ADMIN">ADMIN</option>
             <option value="CLIENTE">CLIENTE</option>
             <option value="VENDEDOR">VENDEDOR</option>
             <option value="REPARTIDOR">REPARTIDOR</option>
           </select>
-          <button style={styles.createButton} onClick={handleCreate}>
+          <button style={buttonStyle} onClick={handleCreate}>
             Crear
           </button>
         </div>
 
-        {/* Tabla de usuarios */}
         <div style={{ overflowX: "auto" }}>
-          <table style={styles.table}>
+          <table style={tableStyle}>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Password</th>
-                <th>Acciones</th>
+                <th style={thTdStyle}>ID</th>
+                <th style={thTdStyle}>Usuario</th>
+                <th style={thTdStyle}>Email</th>
+                <th style={thTdStyle}>Rol</th>
+                <th style={thTdStyle}>Password</th>
+                <th style={thTdStyle}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {usuarios.map((u) => (
-                <tr key={u.id} style={styles.row}>
-                  <td>{u.id}</td>
-                  <td>
+                <tr key={u.id}>
+                  <td style={thTdStyle}>{u.id}</td>
+                  <td style={thTdStyle}>
                     {editingUser === u.id ? (
                       <input
+                        style={inputStyle}
                         value={editData.username}
                         onChange={(e) => setEditData({ ...editData, username: e.target.value })}
                       />
@@ -166,9 +260,10 @@ export default function DashboardAdmin() {
                       u.username
                     )}
                   </td>
-                  <td>
+                  <td style={thTdStyle}>
                     {editingUser === u.id ? (
                       <input
+                        style={inputStyle}
                         value={editData.email}
                         onChange={(e) => setEditData({ ...editData, email: e.target.value })}
                       />
@@ -176,9 +271,10 @@ export default function DashboardAdmin() {
                       u.email
                     )}
                   </td>
-                  <td>
+                  <td style={thTdStyle}>
                     {editingUser === u.id ? (
                       <select
+                        style={selectStyle}
                         value={editData.role}
                         onChange={(e) => setEditData({ ...editData, role: e.target.value })}
                       >
@@ -191,11 +287,12 @@ export default function DashboardAdmin() {
                       u.role
                     )}
                   </td>
-                  <td>
+                  <td style={thTdStyle}>
                     {editingUser === u.id ? (
                       <input
                         type="password"
                         placeholder="Nueva contraseña"
+                        style={inputStyle}
                         value={editData.password}
                         onChange={(e) => setEditData({ ...editData, password: e.target.value })}
                       />
@@ -203,22 +300,24 @@ export default function DashboardAdmin() {
                       "••••••"
                     )}
                   </td>
-                  <td>
-                    <button style={styles.deleteBtn} onClick={() => handleDelete(u.id)}>
+                  <td style={thTdStyle}>
+                    <button
+                      style={{ ...buttonStyle, backgroundColor: "#e74c3c", marginRight: 5 }}
+                      onClick={() => handleDelete(u.id)}
+                    >
                       Eliminar
                     </button>
-
                     {editingUser === u.id ? (
                       <>
-                        <button style={styles.editBtn} onClick={submitEdit}>
+                        <button style={{ ...buttonStyle, backgroundColor: "#2ecc71" }} onClick={submitEdit}>
                           Guardar
                         </button>
-                        <button style={styles.deleteBtn} onClick={cancelEditing}>
+                        <button style={{ ...buttonStyle, backgroundColor: "#95a5a6", marginLeft: 5 }} onClick={cancelEditing}>
                           Cancelar
                         </button>
                       </>
                     ) : (
-                      <button style={styles.editBtn} onClick={() => startEditing(u)}>
+                      <button style={{ ...buttonStyle, backgroundColor: "#3498db" }} onClick={() => startEditing(u)}>
                         Editar
                       </button>
                     )}
@@ -232,38 +331,3 @@ export default function DashboardAdmin() {
     </div>
   );
 }
-
-const styles = {
-  container: { flex: 1, padding: 30, backgroundColor: "#f4f6f8" },
-  title: { marginBottom: 30, color: "#333", fontSize: 28 },
-  createForm: { display: "flex", gap: 10, marginBottom: 30, flexWrap: "wrap", alignItems: "center" },
-  input: { padding: 10, borderRadius: 5, border: "1px solid #ccc", minWidth: 180 },
-  select: { padding: 10, borderRadius: 5, border: "1px solid #ccc" },
-  createButton: {
-    padding: "10px 20px",
-    backgroundColor: "#28a745",
-    color: "#fff",
-    border: "none",
-    borderRadius: 5,
-    cursor: "pointer",
-  },
-  table: { width: "100%", borderCollapse: "collapse", backgroundColor: "#fff", borderRadius: 5 },
-  row: { transition: "background 0.2s", cursor: "default", padding: 20 },
-  deleteBtn: {
-    marginRight: 5,
-    padding: "5px 10px",
-    backgroundColor: "#e74c3c",
-    color: "#fff",
-    border: "none",
-    borderRadius: 5,
-    cursor: "pointer",
-  },
-  editBtn: {
-    padding: "5px 10px",
-    backgroundColor: "#3498db",
-    color: "#fff",
-    border: "none",
-    borderRadius: 5,
-    cursor: "pointer",
-  },
-};
