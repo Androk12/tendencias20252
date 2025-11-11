@@ -22,6 +22,17 @@ class PedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pedido
         fields = '__all__'
+        
+    def get_entrega(self, obj):
+        entrega = getattr(obj, 'entrega', None)
+        if entrega:
+            return {
+                "id": entrega.id,
+                "estado": entrega.estado,
+                "repartidor": entrega.repartidor.username,
+                "fecha_asignacion": entrega.fecha_asignacion,
+            }
+        return None
 
 class DetallePedidoSerializer(serializers.ModelSerializer):
     class Meta:

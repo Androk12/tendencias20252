@@ -1,0 +1,144 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* altura fija */
+  background-color: #c62828;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #ffd54f;
+}
+
+.navbar-carrito-btn {
+  margin-left: auto;
+  padding: 8px 16px;
+  background-color: #ffd54f;
+  color: #c62828;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-carrito-btn:hover {
+  background-color: #ffca28;
+}
+
+/* --- padding top para que el contenido no quede debajo del navbar --- */
+body .main-content {
+  padding-top: 80px; /* ligeramente más que la altura del navbar */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative; /* Para posicionar dropdowns relativos al navbar */
+}
+
+.perfil-wrapper {
+  position: relative;
+}
+
+/* Botón Perfil */
+.navbar-perfil-btn {
+  padding: 6px 12px;
+  background-color: #ffd54f;
+  color: #c62828;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-perfil-btn:hover {
+  background-color: #ffca28;
+}
+
+/* Dropdown perfil a la izquierda del botón */
+.perfil-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  min-width: 220px;
+  z-index: 1001;
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.perfil-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cerrar-sesion-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #c62828;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cerrar-sesion-btn:hover {
+  background-color: #b71c1c;
+}
