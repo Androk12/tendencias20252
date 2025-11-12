@@ -7,6 +7,7 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from apps.pedidos.views import RegistroUsuarioView
 
+
 schema_view = get_schema_view(
    openapi.Info(
       title="Mi API",
@@ -30,5 +31,5 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('', include(router_api.urls)),
-    path('registro/', RegistroUsuarioView.as_view(), name='registro'),
+   
 ]

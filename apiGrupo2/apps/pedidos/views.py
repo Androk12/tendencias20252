@@ -17,8 +17,8 @@ from .pdf import *
 from .json import *
 from django.http import HttpResponse
 from rest_framework.views import APIView
+import logging
 # --- ViewSets para cada modelo ---
-
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     """
@@ -400,3 +400,18 @@ class NotificacionViewSet(viewsets.ModelViewSet):
         """
         # Aquí implementarías la lógica para enviar notificaciones masivas
         return Response({'mensaje': 'Funcionalidad de notificación masiva pendiente de implementación'})
+    
+
+
+
+logger = logging.getLogger(__name__)
+
+class PedidoViewSet(viewsets.ModelViewSet):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer
+
+    def perform_create(self, serializer):
+        pedido = serializer.save()
+        logger.info(f"Pedido creado: {pedido.id} por {self.request.user.username}")
+        return pedido
+
