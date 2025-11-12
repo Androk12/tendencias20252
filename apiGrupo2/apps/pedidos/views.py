@@ -19,6 +19,11 @@ from django.http import HttpResponse
 from rest_framework.views import APIView
 import logging
 # --- ViewSets para cada modelo ---
+from django.http import JsonResponse
+from django.conf import settings
+import os
+from datetime import datetime
+
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     """
@@ -415,3 +420,22 @@ class PedidoViewSet(viewsets.ModelViewSet):
         logger.info(f"Pedido creado: {pedido.id} por {self.request.user.username}")
         return pedido
 
+
+def get_logs(request):
+    """Devuelve las últimas 100 líneas del log como JSON para mostrar en el frontend."""
+    log_dir = getattr(settings, "LOG_DIR", os.path.join(settings.BASE_DIR, "logs"))
+    log_file = os.path.join(log_dir, f'django_{datetime.now().strftime("%Y-%m-%d")}.log')
+
+    if not os.path.exists(log_file):
+        return JsonResponse({"error": "No se encontró el archivo de log"}, status=404)
+
+    try:
+        with open(log_file, "r", encoding="utf-8") as f:
+            lines = f.readlines()[-100:]  # últimas 100 líneas
+    except UnicodeDecodeError:
+        # Si hay caracteres no UTF-8
+        with open(log_file, "r", encoding="latin-1") as f:
+            lines = f.readlines()[-100:]
+
+    logs = [line.strip() for line in lines]
+    return JsonResponse({"logs": logs}, json_dumps_params={"ensure_ascii": False})

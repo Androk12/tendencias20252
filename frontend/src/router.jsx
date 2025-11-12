@@ -8,10 +8,11 @@ import Perfil from "./pages/Perfil";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import DashboardVendedor from "./pages/DashboardVendedor";
 import DashboardRepartidor from "./pages/DashboardRepartidor";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Entregas from "./pages/Entregas";
 import ClienteProductos from "./pages/ClienteProductos";
 import MisPedidos from "./pages/Mispedidos"; // ✅ Import corregido
+import ProtectedRoute from "./components/ProtectedRoute";
+import LogsView from "./components/LogsView"; // ✅ Nuevo import para logs
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/login" replace /> },
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  {
+    path: "/logs", // ✅ Nueva ruta para logs
+    element: (
+      <ProtectedRoute>
+        <LogsView />
+      </ProtectedRoute>
+    ),
+  },
 
   // Rutas específicas para clientes
   {
@@ -83,8 +92,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/cliente/mispedidos",
-    element: <MisPedidos />, // ✅ Ruta corregida y consistente
+    element: <MisPedidos />,
   },
 ]);
 
 export default router;
+

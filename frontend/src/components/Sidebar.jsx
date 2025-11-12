@@ -8,23 +8,28 @@ const Sidebar = ({ textColor = "white" }) => (
     <nav>
       <ul className="space-y-4">
         <li>
-          <Link to="/" style={{ color: textColor }} className="hover:opacity-80">
+          <Link to="/dashboardAdmin" style={{ color: textColor }} className="hover:opacity-80">
             Dashboard
           </Link>
         </li>
         <li>
-          <Link to="/Productos" style={{ color: textColor }} className="hover:opacity-80">
+          <Link to="/productos" style={{ color: textColor }} className="hover:opacity-80">
             Inventario
           </Link>
         </li>
         <li>
-          <Link to="/Pedidos" style={{ color: textColor }} className="hover:opacity-80">
+          <Link to="/pedidos" style={{ color: textColor }} className="hover:opacity-80">
             Pedidos
           </Link>
         </li>
         <li>
-          <Link to="/Entregas" style={{ color: textColor }} className="hover:opacity-80">
+          <Link to="/entregas" style={{ color: textColor }} className="hover:opacity-80">
             Entregas
+          </Link>
+        </li>
+        <li>
+          <Link to="/logs" style={{ color: textColor }} className="hover:opacity-80">
+            Logs
           </Link>
         </li>
       </ul>
@@ -38,3 +43,4 @@ const Sidebar = ({ textColor = "white" }) => (
 );
 
 export default Sidebar;
+

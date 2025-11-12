@@ -1,10 +1,12 @@
 # Vamos a crear las rutas para nuestra API de Pedidos
 from rest_framework.routers import DefaultRouter
+from apps.pedidos.views import get_logs
 from apps.pedidos.views import (
     UsuarioViewSet, PedidoViewSet, ProductoViewSet, DetallePedidoViewSet,
     EntregaViewSet, ReporteViewSet, NotificacionViewSet
 )
-
+from django.urls import path
+from apps.pedidos.views import get_logs
 
 # Crearemos el DefaultRouter (esto nos crea las rutas automáticamente)
 router_api = DefaultRouter()
@@ -18,4 +20,6 @@ router_api.register(r'entregas', EntregaViewSet, basename='entregas')
 router_api.register(r'reportes', ReporteViewSet, basename='reportes')
 router_api.register(r'notificaciones', NotificacionViewSet, basename='notificaciones')
 
-
+urlpatterns = [
+    path('logs/', get_logs, name='get_logs'),
+]
