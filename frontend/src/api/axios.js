@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "https://tendencias20252-td7g.onrender.com",
 });
 
 // Interceptor de petición para agregar el token

@@ -221,7 +221,8 @@ REST_AUTH = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://tendencias20252-td7g.onrender.com"
+    "https://tendencias20252-td7g.onrender.com",
+    "https://despligue-vercel-rho.vercel.app/"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False  #Se cambia a false para despliegue
