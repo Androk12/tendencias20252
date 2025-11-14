@@ -27,3 +27,4 @@ urllib3==2.5.0
 django-cors-headers
 locust==2.32.0
 whitenoise==6.11.0
+gunicorn==23.0.0
