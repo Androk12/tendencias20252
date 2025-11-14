@@ -38,6 +38,8 @@ npm run dev
 - **Load Testing UI**: http://localhost:8089
 - **API Documentation**: http://localhost:8000/swagger/
 - **Documentacion Front**:https://tecnologicodeantioquia-my.sharepoint.com/:w:/g/personal/diego_ocampo30_correo_tdea_edu_co/EYsvReL2LLFLh6prTTB2MfEBoITOEHQ0WTAfOyVO9m_reA?e=Km5fQp
+- **FrontEnd Desplegado**: desplique-vercel-rho.vercel.app
+
 ## 🧪 Load Testing
 
 ### Usuarios de Prueba
