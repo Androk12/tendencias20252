@@ -411,6 +411,62 @@ class NotificacionViewSet(viewsets.ModelViewSet):
 
 logger = logging.getLogger(__name__)
 
+# Endpoint para pruebas de carga
+class LoadTestView(APIView):
+    """
+    Endpoint específico para pruebas de carga con JMeter.
+    Simula diferentes cargas de trabajo para testing.
+    """
+    permission_classes = [permissions.AllowAny]
+    
+    def get(self, request):
+        """Endpoint simple para pruebas de GET con diferentes parámetros"""
+        import time
+        import random
+        
+        # Simular diferentes tiempos de respuesta según parámetro
+        delay = request.GET.get('delay', 0)
+        if delay:
+            time.sleep(float(delay))
+        
+        # Generar datos de prueba
+        data = {
+            'timestamp': datetime.now().isoformat(),
+            'server_status': 'OK',
+            'load_test': True,
+            'response_id': random.randint(1000, 9999),
+            'usuarios_total': Usuario.objects.count(),
+            'productos_total': Producto.objects.count(),
+            'pedidos_total': Pedido.objects.count(),
+            'delay_aplicado': delay
+        }
+        
+        return Response(data, status=200)
+    
+    def post(self, request):
+        """Endpoint para pruebas de POST con validación de datos"""
+        data = request.data
+        
+        # Validar estructura básica
+        required_fields = ['test_name', 'user_count']
+        for field in required_fields:
+            if field not in data:
+                return Response({
+                    'error': f'Campo {field} es requerido',
+                    'status': 'failed'
+                }, status=400)
+        
+        # Simular procesamiento
+        response_data = {
+            'test_name': data['test_name'],
+            'user_count': data['user_count'],
+            'timestamp': datetime.now().isoformat(),
+            'status': 'processed',
+            'message': 'Prueba de carga procesada exitosamente'
+        }
+        
+        return Response(response_data, status=201)
+
 class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
