@@ -2,6 +2,7 @@
 
 Sistema completo de gestión de pedidos con Django REST API, React Frontend y Load Testing con Locust.
 
+
 ## 🚀 Inicio Rápido
 
 ### Opción 1: Script Automático (Windows)
@@ -36,7 +37,7 @@ npm run dev
 - **Frontend**: http://localhost:5173  
 - **Load Testing UI**: http://localhost:8089
 - **API Documentation**: http://localhost:8000/swagger/
-
+- **Documentacion Front**:https://tecnologicodeantioquia-my.sharepoint.com/:w:/g/personal/diego_ocampo30_correo_tdea_edu_co/EYsvReL2LLFLh6prTTB2MfEBoITOEHQ0WTAfOyVO9m_reA?e=Km5fQp
 ## 🧪 Load Testing
 
 ### Usuarios de Prueba
