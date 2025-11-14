@@ -29,11 +29,6 @@ npm install
 npm run dev
 ```
 
-#### 3. Load Testing (Locust)
-```bash
-# Desde la raíz del proyecto con venv activado
-locust -f apiGrupo2\tests\load_tests\locustfile.py --host=http://localhost:8000
-```
 
 ## 🌐 URLs del Proyecto
 
