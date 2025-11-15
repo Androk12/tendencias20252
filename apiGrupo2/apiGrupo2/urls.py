@@ -7,7 +7,7 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from apps.pedidos.views import RegistroUsuarioView, LoadTestView
 from django.urls import path, include
-
+from django.http import JsonResponse
 schema_view = get_schema_view(
    openapi.Info(
       title="Mi API",
@@ -20,7 +20,13 @@ schema_view = get_schema_view(
    public=True,
    permission_classes=(permissions.AllowAny,),
 )
+def healthcheck(request):
+    return JsonResponse({"status": "ok"})
 
+urlpatterns = [
+    path("", healthcheck),
+    ...
+]
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router_api.urls)),

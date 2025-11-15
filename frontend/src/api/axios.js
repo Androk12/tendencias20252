@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const API = axios.create({
   baseURL: "https://tendencias20252-td7g.onrender.com",
 });
