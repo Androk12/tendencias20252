@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const API = axios.create({
-  baseURL: "https://tendencias20252-td7g.onrender.com/api/",
+  baseURL: "https://tendencias20252-td7g.onrender.com",
 });
 
 // Interceptor de petición para agregar el token

@@ -20,13 +20,7 @@ schema_view = get_schema_view(
    public=True,
    permission_classes=(permissions.AllowAny,),
 )
-def healthcheck(request):
-    return JsonResponse({"status": "ok"})
 
-urlpatterns = [
-    path("", healthcheck),
-    ...
-]
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router_api.urls)),
